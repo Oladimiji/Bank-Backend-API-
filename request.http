@@ -1,0 +1,86 @@
+### Variables
+@host = http://127.0.0.1:8000
+@access_token = YOUR_ACCESS_TOKEN_HERE
+@sender_user = sender_user
+@sender_password = your_password
+@receiver_account_number = YOUR_RECEIVER_ACCOUNT_NUMBER_HERE
+
+# ----------------- User Registration -----------------
+
+### Register a new user (Sender)
+POST {{host}}/api/register/
+Content-Type: application/json
+
+{
+    "username": "{{sender_user}}",
+    "email": "sender@example.com",
+    "password": "{{sender_password}}"
+}
+
+### Register a new user (Receiver)
+POST {{host}}/api/register/
+Content-Type: application/json
+
+{
+    "username": "receiver_user",
+    "email": "receiver@example.com",
+    "password": "your_password"
+}
+
+# ----------------- Authentication -----------------
+
+### Get a JWT token for the sender user
+POST {{host}}/api/token/
+Content-Type: application/json
+
+{
+    "username": "Mj",
+    "password": "Temitayo"
+}
+
+# ----------------- Account Actions -----------------
+
+### Deposit money into the account
+POST {{host}}/api/deposit/
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+    "amount": 5000.00,
+    "description": "Initial deposit"
+}
+
+### View account details
+GET {{host}}/api/account/
+Authorization: Bearer {{access_token}}
+
+### Withdraw money from the account
+POST {{host}}/api/withdrawal/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2NzMyNzczLCJpYXQiOjE3NTY3MzI0NzMsImp0aSI6ImNhY2I2NjkzNTMwMzRkODJhOWY3ZjUwYWRjOGM4MTY3IiwidXNlcl9pZCI6IjQifQ.FsCQ7DT58pqZ5dZCtqZAz77ELkTGXGwRfK_ukUUmk5E
+
+{
+    "amount": 500.00,
+    "description": "Weekly groceries"
+}
+
+# ----------------- Transactions -----------------
+
+### Transfer money to another account
+POST {{host}}/api/transfer/
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "receiver_account_number": "{{receiver_account_number}}",
+    "amount": 50.00,
+    "description": "Transfer to friend"
+}
+
+### View all transactions for the user
+GET {{host}}/api/transactions/
+Authorization: Bearer 
+
+### View only deposit transactions
+GET {{host}}/api/transactions/?transaction_type=deposit
+Authorization: Bearer 
